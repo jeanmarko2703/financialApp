@@ -1,14 +1,19 @@
 import 'package:financial/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/amount_provider.dart';
 
 class AmountScreen extends StatelessWidget {
   const AmountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final amount = Provider.of<AmountProvider>(context, listen: true);
+    final title = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Main Work"),
+        title: Text(title),
       ),
       body: Column(
         children: [
@@ -35,7 +40,7 @@ class AmountScreen extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                const Text("Your savings S/. 45,000")
+                Text("Your savings S/. ${amount.currentAmount}")
               ],
             ),
           ),
@@ -63,15 +68,21 @@ class AmountScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.white),
-                  child: const Text(
-                    "Save",
-                    style: TextStyle(color: Colors.black, fontSize: 20),
+                GestureDetector(
+                  onTap: () {
+                    amount.increaseAmount(50);
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.white),
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
                   ),
                 ),
                 const Row(

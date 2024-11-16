@@ -58,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const Text("Movements"),
                 GestureDetector(
-                    // onTap: () => addMovement(context),
-                    onTap: () => amount.increaseAmount(20),
+                    onTap: () => addMovement(context),
+                    // onTap: () => amount.increaseAmount(20),
                     child: const Icon(Icons.add_box_rounded))
               ],
             ),
@@ -102,6 +102,7 @@ void addMovement(BuildContext context) => showDialog(
     context: context,
     builder: (context) {
       final formKey = GlobalKey<FormState>();
+      final movementController = TextEditingController();
       bool isIncome = true;
       return StatefulBuilder(
         builder: (context, setState) {
@@ -119,6 +120,7 @@ void addMovement(BuildContext context) => showDialog(
                     height: 20,
                   ),
                   TextFormField(
+                    controller: movementController,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
                       hintText: "Movement's name",
@@ -160,7 +162,11 @@ void addMovement(BuildContext context) => showDialog(
             actions: [
               ElevatedButton(
                   onPressed: () {
-                    if (formKey.currentState?.validate() ?? false) {}
+                    if (formKey.currentState?.validate() ?? false) {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "AmountScreen",
+                          arguments: movementController.text);
+                    }
                   },
                   child: const Text("Continue"))
             ],

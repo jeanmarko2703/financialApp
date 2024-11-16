@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppRoutes {
-  static String initialRoute = 'AmountScreen';
+  static String initialRoute = 'HomeScreen';
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     Map<String, Widget Function(BuildContext)> routes = {
