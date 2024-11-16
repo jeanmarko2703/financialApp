@@ -3,9 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/custom_button.dart';
+import '../widgets/icon_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    Provider.of<AmountProvider>(context).loadAmount();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +58,8 @@ class HomeScreen extends StatelessWidget {
               children: [
                 const Text("Movements"),
                 GestureDetector(
-                    onTap: () => addMovement(context),
+                    // onTap: () => addMovement(context),
+                    onTap: () => amount.increaseAmount(20),
                     child: const Icon(Icons.add_box_rounded))
               ],
             ),
@@ -69,17 +83,13 @@ class MovementWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle, color: Colors.white.withOpacity(0.2)),
-        child: const Icon(Icons.medical_information),
+    return const ListTile(
+      leading: IconWidget(
+        icon: Icons.medical_information,
       ),
-      title: const Text("Main work"),
-      subtitle: const Text("June 1st"),
-      trailing: const Text(
+      title: Text("Main work"),
+      subtitle: Text("June 1st"),
+      trailing: Text(
         "+ S/.${3000}",
         style: TextStyle(
             color: Colors.green, fontWeight: FontWeight.w600, fontSize: 20),

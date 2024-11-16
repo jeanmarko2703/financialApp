@@ -5,7 +5,8 @@ import '../services/localDatabase_service.dart';
 
 class AmountProvider extends ChangeNotifier {
   final DatabaseHelper _dbHelper = DatabaseHelper();
-  AmountModel _amountModel = AmountModel.empty();
+  AmountModel _amountModel =
+      AmountModel.empty().copyWith(goalName: 'principal');
   double get currentAmount => _amountModel.currentAmount;
 
   void setAmount(double amount) {
@@ -16,6 +17,7 @@ class AmountProvider extends ChangeNotifier {
   void increaseAmount(double amount) {
     _amountModel = _amountModel.copyWith(
         currentAmount: _amountModel.currentAmount + amount);
+    _dbHelper.insertAmount(_amountModel);
     notifyListeners();
   }
 
